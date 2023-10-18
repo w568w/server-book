@@ -16,12 +16,13 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install latest mdbook
-        run: |
-          tag=$(curl 'https://api.github.com/repos/rust-lang/mdbook/releases/latest' | jq -r '.tag_name')
-          url="https://github.com/rust-lang/mdbook/releases/download/${tag}/mdbook-${tag}-x86_64-unknown-linux-gnu.tar.gz"
-          mkdir mdbook
-          curl -sSL $url | tar -xz --directory=./mdbook
-          echo `pwd`/mdbook >> $GITHUB_PATH
+        uses: taiki-e/install-action@mdbook
+      - name: Install latest cargo
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+      - name: Install latest mdbook-admonish
+        run: cargo install mdbook-admonish
+      - name: Configure mdbook-admonish
+        run: mdbook-admonish install .
       - name: Build Book
         run: |
           # This assumes your book is in the root of your repository.
