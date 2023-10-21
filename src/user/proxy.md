@@ -30,7 +30,7 @@ $ scp /path/to/config.yaml <用户名>@<主机>:/path/to/config.yaml
 如果你使用的是 Visual Studio Code 连接到服务器，也可以在 VSCode 的资源管理器中直接将文件从本地复制粘贴到服务器上。
 
 ### 检阅配置文件
-在导入配置文件之后，你可以使用 `cat` 命令检阅一下配置文件的内容：
+在导入配置文件之后，可以使用 `cat` 命令检阅一下配置文件的内容：
 
 ```bash
 $ cat /path/to/config.yaml
