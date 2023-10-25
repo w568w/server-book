@@ -9,7 +9,7 @@
 ```
 
 ## 2. 生成 SSH 密钥对
-在终端中执行以下命令：
+在本地终端中执行以下命令：
 
 ```bash
 $ ssh-keygen
@@ -44,6 +44,19 @@ ssh-rsa AAAAB3NzaC1yc2EA... myname@mypc
 ```bash
 $ echo "<刚刚复制的公钥内容>" >> ~/.ssh/authorized_keys
 ```
+
+```admonish warning
+这里的 `>>` 是重定向操作符，表示将内容追加到文件末尾，而不是覆盖。
+
+如果你已经有了 `authorized_keys` 文件，不要换成 `>`，否则会覆盖原有内容。
+```
+
+~~~admonish tip
+如果报告找不到文件，请先创建 `~/.ssh/` 目录：
+```bash
+$ mkdir -p ~/.ssh
+```
+~~~
 
 ```admonish example
 `authorized_keys` 的内容应该类似于你的公钥，每行一个。
