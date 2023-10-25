@@ -108,6 +108,12 @@ $ su - <账户名>
 
 ## 5. 迁移数据
 
+```dmonish tip
+以下是对不同种类的数据和配置的迁移方法的简要介绍。
+
+与其他节不同的是，**你不一定要按列出的顺序挨个执行！**
+```
+
 ### Conda 支持
 如果你此前使用 conda 管理环境，可用以下命令在新账户中初始化 conda 支持：
 
@@ -157,7 +163,7 @@ Defaulting to user installation because normal site-packages is not writeable
 ```shell
 $ conda create -n <新环境名> python=<原环境中的 Python 版本>
 $ conda activate <新环境名>
-$ pip install -r <原环境中的 requirements.txt>
+$ pip install -r <原环境中的 requirements.txt 位置>
 ```
 
 #### b. `environment.yml` 文件
@@ -182,14 +188,14 @@ $ conda create -n <新环境名> --clone <原环境名>
 
 ---
 
-迁移完成后，用以下命令删除原环境：
+迁移完成后，用 `$ exit` 回到**原公共账户**，用以下命令删除原环境：
 
 ```shell
 $ conda env remove -n <原环境名>
 ```
 
 ### 代码和数据迁移
-如果你的代码和数据都在公共账户的 HOME 目录下，可用以下命令将它们迁移到新账户的 HOME 目录下：
+如果你的代码和数据都在公共账户的 HOME 目录下，可用以下命令在 **原公共账户** 下将它们迁移到新账户的 HOME 目录下：
 
 ```shell
 $ cp -r <原来的代码位置> <新账户的 HOME 目录位置>
