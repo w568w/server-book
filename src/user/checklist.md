@@ -95,7 +95,24 @@ root 权限拥有最高权限，使用 root 权限可导致误操作，造成严
 
 尽可能不使用和 root 权限相关的命令，例如 `sudo`。如果一定要使用，**务必确认自己知道自己在做什么**。
 
+
+~~~admonish error title="重要提醒"
 **严禁从网上复制粘贴不了解的、需要 `sudo` 才能执行的命令**，这些命令可能会造成严重后果！
+
+**严禁私自用以下命令之一改变服务器的电源状态：
+
+- `shutdown`
+- `reboot`
+- `poweroff`
+- `halt`
+- `init`
+- `systemctl poweroff`
+- `systemctl reboot`
+- `systemctl halt`
+- `systemctl suspend`
+- `systemctl hibernate`
+- `systemctl hybrid-sleep`
+~~~
 
 有关配置镜像源等问题，可以让管理员协助。
 
