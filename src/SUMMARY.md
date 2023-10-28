@@ -12,3 +12,4 @@
 # 管理员指南
 
 - [新服务器配置指南](admin/new-server.md)
+- [Slurm（单机）部署](admin/slurm-single-node.md)
