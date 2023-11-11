@@ -32,6 +32,7 @@ The key fingerprint is:
 
 ## 3. 将公钥上传到服务器
 直接打开公钥文件（即以 `.pub` 结尾的文件）并复制其中的内容，内容一般形为：
+
 ```
 ssh-rsa AAAAB3NzaC1yc2EA... myname@mypc
 ```

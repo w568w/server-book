@@ -158,9 +158,20 @@ Name=gpu File=/dev/nvidia0
 Name=gpu File=/dev/nvidia1
 ```
 
-## 7. 启动服务
+```admonish warning
+Slurm 对 GPU 的控制非常弱，实际上只是通过设置环境变量「建议」程序使用哪些 GPU，而不会真的限制程序使用。
 
-用以下命令启动服务：
+可参考 [Slurm 极简手册](/user/slurm-quickstart.md) 中的相关介绍。
+
+一些相关问答包括：
+
+1. [Slurm - GPU enforcement with cgroups](https://superuser.com/questions/1480883/slurm-gpu-enforcement-with-cgroups)
+2. [SLURM: restrict GPU access only to SLURM](https://unix.stackexchange.com/questions/437589/slurm-restrict-gpu-access-only-to-slurm)
+```
+
+## 7. 启用服务
+
+用以下命令启用并启动服务：
 
 ```
 $ systemctl enable --now slurmdbd
@@ -179,7 +190,7 @@ $ systemctl enable --now slurmd
 在节点上运行以下命令：
 
 ```
-$ srun --gres=gpu:2 env | grep CUDA
+$ srun --gres=gpu:<要请求的显卡数> env | grep CUDA
 ```
 
 显示 `CUDA_VISIBLE_DEVICES=<显卡位置>` 说明配置成功。
