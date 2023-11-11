@@ -1,7 +1,7 @@
 # 如何使用 SSH 密钥登录
 
 ## 1. 检查是否已有 SSH 密钥
-在 HOME 目录下寻找 `.ssh` 目录，如果其中包含除了 `known_hosts`、`config` 和 `authorized_keys` 之外的一对名为 `<名称>` 和 `<名称>.pub` 的文件，例如 `id_rsa` 和 `id_rsa.pub`，则说明已有 SSH 密钥，可跳过下一步。
+在你的（**注意，不是在服务器上找，而是在自己的电脑上**）HOME 目录下寻找 `.ssh` 目录，如果其中包含除了 `known_hosts`、`config` 和 `authorized_keys` 之外的一对名为 `<名称>` 和 `<名称>.pub` 的文件，例如 `id_rsa` 和 `id_rsa.pub`，则说明已有 SSH 密钥，可跳过下一步。
 
 ```admonish info title="不同系统的 HOME 目录位置"
 - macOS/Linux：`$HOME`

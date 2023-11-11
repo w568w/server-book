@@ -52,6 +52,104 @@ $ sbatch --gres=gpu:1 train.sh
 `sbatch` 运行的脚本可以包含配置参数，详细参数可参考[上海交大超算平台用户手册](https://docs.hpc.sjtu.edu.cn/job/slurm.html)。
 ~~~
 
+### d. 我要运行一个 IPython 笔记本（例如 Jupyter Notebook）
+
+```admonish warning
+本部分仅适用于简单的单节点 Slurm 环境，因为它依赖于「localhost 是计算节点」的前提。
+
+如果你在使用包含多个节点的 Slurm，本部分介绍的命令不会正常工作。
+```
+
+```admonish warning
+这里介绍的办法**在 Visual Studio Code 中也可以使用，但是可能有问题**。
+
+**请先阅读**下面「d.1. 在 Visual Studio Code 中运行」中「体验下降注意」的内容。
+```
+
+用以下命令启动一个 Jupyter Notebook 服务：
+
+```sh
+# 执行前确保你已经切换到自己的 Python 环境（例如 conda activate xxxx）
+$ srun --gres=gpu:1 jupyter notebook --no-browser --ip localhost --port `python -c "import socket; s = socket.socket(); s.bind(('', 0));print(s.getsockname()[1]);s.close()"` --ServerApp.token='123'
+```
+
+这在服务器本地任意一个空闲端口上启动了一个 Jupyter Notebook 服务，密码为 `123`。
+
+启动之后会显示**端口号**，输出类似于：
+
+```
+[I 10:00:00.000 ServerApp] http://localhost:12345/?token=...
+```
+
+记住这个端口号。
+
+~~~admonish tip
+你也可以固定端口，便于在 Visual Studio Code 中多次使用。例如，固定端口为 8888，修改密码为 456：
+
+```sh
+# 执行前确保你已经切换到自己的 Python 环境（例如 conda activate xxxx）
+$ srun --gres=gpu:1 jupyter notebook --no-browser --ip localhost --port 8888 --ServerApp.token='456'
+```
+
+~~~
+
+接下来，根据运行环境的不同，有不同的对应步骤：
+
+#### d.1. 在 Visual Studio Code 中运行
+打开任意一个笔记本文件，在右上角切换内核，选择「选择其他内核」，然后选择「已有的 Jupyter 服务器」，输入 `http://localhost:12345`（端口号替换为刚才启动的），回车，输入连接密码连接即可。
+
+~~~admonish warning title="体验下降注意"
+截至 2023 年 11 月，Visual Studio Code 的 Jupyter Notebook 插件对连接到「已有的 Jupyter 服务器」的支持不太好，**代码补全、已安装包解析等功能都不会正常工作**。
+
+如果你很介意，这里还有一种完全不同、让你可以完全按原来方式工作的方法，但不推荐使用：
+
+1. 安装包 [`simple_slurm`](https://github.com/amq92/simple_slurm)：
+
+```sh
+$ pip install simple_slurm
+```
+
+2. 在笔记本文件中加入以下两个代码块：
+
+```python
+# 申请 GPU
+from simple_slurm import Slurm
+import os
+
+slurm = Slurm(gres=['gpu:1'])
+job_id = slurm.sbatch('env > slurm.env; yes > /dev/null')
+
+with open("slurm.env", "r") as f:
+    for line in f.readlines():
+        if "CUDA_VISIBLE_DEVICES" in line:
+            print(line.strip())
+            os.environ["CUDA_VISIBLE_DEVICES"] = line.strip().split("=")[-1]
+
+os.remove("slurm.env")
+```
+
+```python
+# 释放 GPU
+import os
+os.system(f"scancel {job_id}")
+```
+
+3. 每次运行笔记本时，先运行第一个代码块，然后就可以像平常一样继续运行你的代码。**关闭笔记本前，务必运行第二个代码块。如果你忘记了，请务必用以下命令手动释放 GPU**：
+
+```sh
+$ scancel <第一个代码块输出的 job_id>
+```
+~~~
+
+#### d.2. 在浏览器中使用 Jupyter Notebook
+首先将服务器端口映射到本地，例如**在本地执行**（端口号 12345 替换为刚才启动的，`<username>` 和 `<hostname>` 替换为你实际连接服务器时用的用户名和服务器地址）：
+
+```sh
+$ ssh -L 12345:localhost:12345 <username>@<hostname>
+```
+
+然后在浏览器中打开 `http://localhost:12345` 即可。
+
 ## 查看队列
 ### a. 当前正在运行和排队等待的任务
 使用 `squeue` 命令，例如：
@@ -72,7 +170,7 @@ alias sq='squeue -o "%.18i %.9P %.40j %.8u %.8T %.6D %.4C %.5D %.6m %.13b %.10M"
 ~~~
 
 ~~~admonish tip
-如果显示出来的表格太宽以至于有跨行，可以适当缩减列宽，通过减少 `%` 后面的数字来实现。
+如果显示出来的表格太宽以至于跨行显示，可以适当缩减列宽，通过减少 `%` 后面的数字来实现。
 ~~~
 
 

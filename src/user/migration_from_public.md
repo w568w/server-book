@@ -37,7 +37,7 @@ $ sudo echo hello
 ~~~admonish warning
 请不要在 `--home-dir` 处填入已有的目录，例如你原来的实验代码目录。这样做可能会导致权限错误。
 
-如果一定要用已有的路径，可将原来的路径重命名（假设原来的代码目录为 `/data/myname`）：
+如果一定要用已有的路径，可先将原来的路径重命名（假设原来的代码目录为 `/data/myname`）：
 
 ```shell
 # mv /data/myname /data/myname.bak
@@ -45,7 +45,7 @@ $ sudo echo hello
 ~~~
 
 ## 2. 设置密码
-用以下命令设置新账户的密码。创建密码时请遵循基本安全原则。
+用以下命令设置新账户的密码。创建密码时请遵循基本安全原则（例如不要使用 123456、abcdefg 等简单密码）。
 
 ```shell
 # passwd <账户名>
@@ -68,7 +68,6 @@ $ sudo echo hello
 - `admin`
 - `adm`
 - `root`
-- `rootadm`
 - ...
 
 正确的做法是，先查看 `/etc/sudoers` 文件中的内容：
@@ -117,7 +116,7 @@ $ su - <账户名>
 
 ## 6. 迁移数据
 
-```dmonish tip
+```admonish tip
 以下是对不同种类的数据和配置的迁移方法的简要介绍。
 
 与其他节不同的是，**你不一定要按列出的顺序挨个执行！**
@@ -157,9 +156,9 @@ Defaulting to user installation because normal site-packages is not writeable
 ...
 ```
 
-这是因为原先的安装在公共账户下，而新账户没有权限修改。解决方法是，将原先的环境迁移到新账户下。
+这是因为原先的安装在公共账户下，而新账户没有权限修改。解决方法是将原先的环境迁移到新账户下。
 
-遗憾的是，conda 并没有一个适用于所有情况的迁移环境方法，因此你不得不从下面几个迁移方法中做出选择（按推荐程度排序）：
+遗憾的是，conda 并没有一个适用于所有情况的迁移环境方法，因此你不得不从下面几个迁移方法中做出选择：
 
 ```admonish info
 更多方法可参考 [Moving Conda Environments](https://www.anaconda.com/blog/moving-conda-environments)。
@@ -228,5 +227,5 @@ $ rm -rf <原来的代码位置>
 ```admonish note
 **全部完成后，请丢弃原来的公共账户登录方式，包括密钥、密码等。** 
 
-这是安全的，因为你的新账户也具有 sudo 权限。
+即便你需要 sudo 权限，这也是安全的，因为你的新账户也配置为了具有 sudo 权限。
 ```
