@@ -3,7 +3,11 @@
 由于众所周知的原因，许多服务（例如 Hugging Face Hub）在国内无法直接访问。为了解决这个问题，我们提供了一个简明的代理配置指南。
 
 ## 1. 启动代理服务
-推荐使用 [clash](https://github.com/Dreamacro/clash) 管理代理。clash 是一个开源的代理软件，支持多种代理协议，例如 SOCKS5、HTTP、Shadowsocks、VMess 等。
+推荐使用 [Clash](https://github.com/Dreamacro/clash) 管理代理。Clash 是一个开源的代理软件，支持多种代理协议，例如 SOCKS5、HTTP、Shadowsocks、VMess 等。
+
+```admonish warning
+目前，Clash 的作者已经停止维护 Clash，仓库亦已经删除，上面的链接无法访问。如果需要继续使用，可使用社区分支的 [Mihomo](https://github.com/MetaCubeX/mihomo)。
+```
 
 许多代理提供者也提供了 clash 配置文件（或 URL），便于直接导入使用。下面假定你已经有了一个可用的 clash 配置文件（通常是一个 `.yaml` 文件）。
 

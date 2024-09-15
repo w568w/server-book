@@ -1,6 +1,10 @@
 # Slurm 极简手册
 本文是面向普通用户的 Slurm 速查手册，主要介绍 Slurm 的常用命令。
 
+```admonish info title="小广告"
+我正在开发一个 Slurm 的竞品调度系统，[TurboSched](https://github.com/w568w/TurboSched)，目前仍在原型阶段。欢迎关注！
+```
+
 ```admonish note title="其他 Slurm 学习资源"
 - [Slurm 官方文档（英文）](https://slurm.schedmd.com/documentation.html)
 - [Slurm 作业调度系统使用指南](https://zhuanlan.zhihu.com/p/356415669)
